@@ -161,6 +161,62 @@ Below are the permissions that we are allowed to
 }
 ```
 
+### Exploring SNS services ###
+
+At this point, we can enumerate the different permissions available to the user, but the most obvious service to explore in our case is Simple Notification Service (SNS) as that is in the name of this scenario
+
+First, we can check the module on Pacu that is related to the SNS service.
+
+```
+search sns
+```
+<img width="871" height="377" alt="image" src="https://github.com/user-attachments/assets/50aa1de1-8b1d-46e0-92e8-a093a5d27dbe" />
+
+SNS Enumeration seem to be the way to go to better understand our environment and situation. hence we enumerate the SNS.
+
+```
+run sns__enum
+```
+
+<img width="875" height="616" alt="image" src="https://github.com/user-attachments/assets/70c90c6d-c541-4c30-bcca-89ef5d0964ab" />
+
+We found a SNS topic in our region of us-east-1
+
+### Subscribe to SNS ###
+
+Let us subscribe to the SNS topic, we can do this with another module that we saw when we search for SNS related Pacu modules.
+
+```
+run sns__subscribe
+```
+
+<img width="877" height="90" alt="image" src="https://github.com/user-attachments/assets/776ef445-db2a-4ad2-a5c1-8aa9557acc57" />
+
+We provide our email that we can access to and then we check the email address that we provided for the subscription.
+
+### Completion of the SNS Subscription ###
+
+<img width="1118" height="257" alt="image" src="https://github.com/user-attachments/assets/694e48b0-382c-4547-bb7e-64366a1a812c" />
+
+We click on the link in the email to complete the subscription to SNS.
+
+<img width="1501" height="492" alt="image" src="https://github.com/user-attachments/assets/99d02da7-51d7-47ec-adf8-5075fc18ddcc" />
+
+Shortly after we complete the SNS Subcription, we observed that at a frequency of every 2 minutes, we receive the same email with a DEBUG: API GATEWAY KEY
+
+```
+DEBUG: API GATEWAY KEY 45a3da610dc64703b10e273a4db135bf
+```
+
+### Getting the API ID, StageName and Path ##3
+
+Originally, I thought the ```DEBUG: API GATEWAY KEY ```
+
+
+
+
+
+
 
 
 
